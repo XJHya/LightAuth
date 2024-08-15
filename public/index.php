@@ -1,5 +1,5 @@
 <?php
-require_once '../app/loader.php';
+require '../vendor/autoload.php';
 
 use App\Loader;
 
