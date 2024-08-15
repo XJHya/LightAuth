@@ -7,7 +7,7 @@ class Renderer {
     public $config;
     public function __construct(){
         $user = new User();
-        echo $user->$UserName;
+        //echo $user->UserName;
         $Config = new Config();
         $this->config = $Config->config;
     }
