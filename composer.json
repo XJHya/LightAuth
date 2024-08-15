@@ -1,5 +1,5 @@
 {
-    "name": "aztice/LightAuth",
+    "name": "aztice/light-auth",
     "description": "一个账号管理系统，支持登录、注册、授权等功能",
     "keywords": ["aztice","LightDevTeam","LightAuth","Auth"],
     "authors": [{
