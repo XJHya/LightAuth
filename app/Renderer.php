@@ -7,12 +7,12 @@ class Renderer {
     public $config;
     public function __construct(){
         $user = new User();
-        //echo $user->UserName;
+        echo $user->UserName;
         $Config = new Config();
         $this->config = $Config->config;
     }
     public function load($actionName) {
-        $path = '../templates/' . $actionName . '.html';
+        $path = '../templates/' . $this->config['Template'] . '/' . $actionName . '.html';
         $html = file_get_contents($path);
         $html = $this->render($html, 'config');
         $html = $this->render($html, 'assets');
@@ -56,7 +56,7 @@ class Renderer {
                     '/\${template\.(\w+)}/',
                     function ($matches) {
                         $templateName = $matches[1];
-                        $path = '../templates/' . $templateName . '.html';
+                        $path = '../templates/' . $this->config['Template'] . '/' . $templateName . '.html';
                         if (file_exists($path)) {
                             $data = file_get_contents($path);
                             $data = $this->render($data, 'config');
