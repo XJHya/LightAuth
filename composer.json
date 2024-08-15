@@ -1,4 +1,16 @@
 {
+    "name": "aztice/LightAuth",
+    "description": "一个账号管理系统，支持登录、注册、授权等功能",
+    "keywords": ["aztice","LightDevTeam","LightAuth","Auth"],
+    "authors": [{
+        "name": "aztice",
+        "email": "light-team@foxmail.com",
+        "homepage": "https://light.gs",
+        "role": "IT"
+    }],
+    "time": "2024-8-15",
+    "homepage": "https://light.gs",
+    "license": "AGPL-3.0",
     "autoload": {
         "psr-4": {
             "App\\": "app/"
