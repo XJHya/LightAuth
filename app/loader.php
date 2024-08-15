@@ -1,7 +1,5 @@
 <?php
 namespace App;
-
-require_once 'renderer.php';
 use App\Renderer;
 
 class Loader {
