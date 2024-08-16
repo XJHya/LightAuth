@@ -5,6 +5,7 @@ use App\User;
 
 class Renderer {
     public $config;
+    public $phrases;
     public function __construct(){
         $user = new User();
         echo $user->UserName;
@@ -20,6 +21,7 @@ class Renderer {
         $html = $this->render($html, 'config');
         $html = $this->render($html, 'assets');
         $html = $this->render($html, 'phrases');
+        $html = $this->render($html, 'module');
         echo $this->render($html, 'template');
     }
     
@@ -79,7 +81,13 @@ class Renderer {
                         $phraseKey = $matches[1];
                         $phrasePath = '../templates/' . $this->config['Template'] . '/phrases.json';
                         if (file_exists($phrasePath)) {
-                            $phrases = json_decode(file_get_contents($phrasePath), true);
+                            if(isset($this->phrases)){
+                                $phrases = $this->phrases;
+                            }
+                            else{
+                                $phrases = json_decode(file_get_contents($phrasePath), true);
+                                $this->phrases = $phrases;
+                            }
                             if (isset($phrases[$phraseKey])) {
                                 return $phrases[$phraseKey];
                             } else {
@@ -88,6 +96,20 @@ class Renderer {
                         } else {
                             die("phrases.json 文件不存在");
                         }
+                    },
+                    $template
+                );
+            case 'module':
+                return preg_replace_callback(
+                    '/\${module\.(\w+)}/',
+                    function ($matches) {
+                        $module = $matches[1];
+                        if($module == 'captcha'){
+                            if($this->config['captcha']==false)return "";
+                            $html = '<div class="captchaBox"><input class="input" placeholder="'.$this->phrases['InputCaptcha'].'"><img src="/api/captcha/"></div>';
+                            return $html;
+                        }
+                        return "模块 -> ".$module." 不存在";
                     },
                     $template
                 );
