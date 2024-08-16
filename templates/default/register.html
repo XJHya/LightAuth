@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="Description" content="${config.description}"/>
+    <meta name="Keywords" content="${config.keywords}" />
+    ${assets.css.style}
+    ${assets.js.app}
+    <title>${phrase.register} - ${config.title}</title>
+</head>
+<body>
+    ${template.navbar}
+    <div class="loginbox">
+        <div class="title">${phrase.register}</div>
+        <input class="input" id="username" placeholder="${phrase.InputUsername}"><br/>
+        <input class="input" id="email" placeholder="${phrase.InputEmail}"><br/>
+        <input class="input" id="pw" type="password" placeholder="${phrase.InputPw}"><br/>
+        ${module.captcha}
+        <button class="loginBtn" onclick="reg();">${phrase.register}</button><br/>
+        <br/>
+        <div class="tips">${phrase.regtips} <a href="/terms/" class="link">${phrase.termsText}</a> ${phrase.and} <a href="/privacy/" class="link">${phrase.privacyText}</a> </div>
+    </div>
+</body>
+</html>
