@@ -12,10 +12,13 @@ keywords: 网站关键词
 template: 模板名(默认default)
 ```
 
-# Nginx配置
+# Nginx伪静态配置
 ```
 location / {
-  try_files $uri $uri/ /index.php?$query_string;
+    try_files $uri $uri/ /index.php?do=$uri;
+}
+location ~* ^/assets/(css|js)/* {
+    try_files $uri /assets.php?file=$uri;
 }
 ```
 
