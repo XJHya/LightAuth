@@ -1,14 +1,15 @@
 <?php
 namespace App;
 use App\Config;
-use App\User;
+use App\UserModule;
 
 class Renderer {
     public $config;
     public $phrases;
+    public $html;
     public function __construct(){
-        $user = new User();
-        echo $user->UserName;
+        $UserModule = new UserModule();
+        echo $UserModule->UserName;
         $Config = new Config();
         $this->config = $Config->config;
     }
@@ -22,7 +23,25 @@ class Renderer {
         $html = $this->render($html, 'assets');
         $html = $this->render($html, 'phrases');
         $html = $this->render($html, 'module');
-        echo $this->render($html, 'template');
+        $this->html = $this->render($html, 'template');
+    }
+    
+    public function replace($str,$str2){
+        $this->html = str_replace($str,$str2,$this->html);
+        return true;
+    }
+    
+    public function relocate($path, $time)
+    {
+    $path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+    $time = intval($time);
+    $metaTag = "<meta http-equiv=\"refresh\" content=\"{$time};url={$path}\">";
+    $this->html = str_replace('<head>',"<head>\n    ".$metaTag,$this->html);
+}
+
+    
+    public function display(){
+        echo $this->html;
     }
     
     public function render($template, $renderName) {
