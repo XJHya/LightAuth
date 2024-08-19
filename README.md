@@ -34,6 +34,9 @@ location ~* ^/assets/(css|js)/* {
 location ~* ^/api/* {
     try_files $uri /api.php?do=$uri;
 }
+location /install/ {
+    try_files $uri $uri/ /install.php?$query_string;
+}
 ```
 
 # Composer仓库
