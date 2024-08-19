@@ -1,6 +1,11 @@
 *{
     margin: 0;
 }
+@media screen and (max-width: 600px) and (orientation: portrait) {
+    .loginbox {
+        width: 90% !important;
+    }
+}
 .loginbox{
     width: 360px;
     margin-left: 0;
@@ -14,7 +19,7 @@
     font-size: 24px;
 }
 .captchaBox .input{
-    width: 70%;
+    width: 69%;
     vertical-align: middle;
 }
 .captchaBox img{
