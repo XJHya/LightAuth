@@ -94,8 +94,7 @@ Light Auth 程序使用协议
         }
         else{
             require_once("../lib/db/inst/".$_POST['db'].'.php');
-            $db = new install();
-            //$db->init($_POST['dbname']);
+            $db = new install($_POST['dbname']);
             $Config->edit('IsInstall',true);
             $admin = [$_POST['user']];
             $Config->edit('admin',$admin);
@@ -112,7 +111,7 @@ Light Auth 程序使用协议
             $html = '
             <div class="box">
         <div class="title">安装成功</div><br/>
-        <div class="orange">请注册一个名为ice的账号~</div><br/>
+        <div class="orange">请注册一个名为'.$_POST['user'].'的账号~</div><br/>
         <button class="agree" onclick="window.location.href=\'/\';">好的</button>
     </div>';
         }
