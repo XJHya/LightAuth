@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Lib\\SMTP\\' => array($baseDir . '/lib/smtp'),
+    'Lib\\DataBase\\' => array($baseDir . '/lib/db'),
     'Lib\\' => array($baseDir . '/lib'),
+    'App\\User\\' => array($baseDir . '/app/user'),
     'App\\' => array($baseDir . '/app'),
 );
