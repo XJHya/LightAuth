@@ -2,6 +2,7 @@
 namespace App;
 use Database\Database;
 use App\Config;
+use App\Ratelimit;
 
 class UserModule
 {
@@ -24,10 +25,11 @@ class UserModule
 
     public function login($user, $pw)
     {
-        if ($this->RateLimit()==true) {
-            return 'ratelimited';
+        $Ratelimit = new Ratelimit();
+        if ($Ratelimit->is_freezed()==true) {
+            return 'freezed';
         }
-        $this->RateLimitRecord();
+        $Ratelimit->record();
 
         if ($this->is_user($user)) {
             $userData = $this->db->get("UserData", $user);
@@ -41,6 +43,10 @@ class UserModule
             }
         }
         return false;
+    }
+    
+    public function register($email,$username,$pw,$captcha){
+        
     }
 
     public function pw_encrypt($pw)
@@ -58,46 +64,4 @@ class UserModule
         return $this->db->iskey("UserData", $user);
     }
 
-    public function GetRealIP()
-    {
-        $ip = "";
-        if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
-            $ip = $_SERVER["HTTP_CLIENT_IP"];
-        } elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-        } else {
-            $ip = $_SERVER["REMOTE_ADDR"];
-        }
-        return $ip;
-    }
-    public function RateLimitRecord()
-    {
-        $json = $this->db->get("RateLimit", "List");
-        $ipKey = $this->GetRealIP() . "-" . date("Y-m-d H:i");
-
-        if (isset($json[$ipKey])) {
-            $json[$ipKey] = $json[$ipKey] + 1;
-        } else {
-            $json[$ipKey] = 1;
-        }
-
-        $this->db->edit("RateLimit", "List", $json);
-        return true;
-    }
-    function RateLimitConfig($ip)
-    {
-        $json = $this->db->get("RateLimit", "List");
-        return $json[$ip . "-" . date("Y-m-d H:i")];
-    }
-    function RateLimit()
-    {
-        $requestCount = $this->RateLimitConfig($this->GetRealIP());
-        $rateLimitThreshold = $this->config['RateLimit'];
-
-        if ($requestCount > $rateLimitThreshold) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
