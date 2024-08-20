@@ -1,7 +1,8 @@
 # LightAuth
 > 轻雨科技自研发的项目,且高扩展性,在Github几乎没有这种项目。
 
-一个PHP账号管理系统，用于高级账号管理系统。
+一个PHP账号管理系统，用于高级账号管理系统。<br/>
+<div style="color:orange">提示: 本项目未发布Release前请勿使用,可能出现Bug等问题</div>
 
 # 功能
 ```
