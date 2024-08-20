@@ -5,6 +5,8 @@ use App\Config;
 use App\Renderer;
 use App\UserModule;
 use App\PhraseHandler;
+use App\User\Login;
+use App\User\Register;
 
 class Api{
     private $config;
@@ -23,13 +25,10 @@ class Api{
                 $Captcha->LoadCaptcha();
                 break;
             case('login'):
-                $app = new Renderer();
-                $app->load("/api/login");
-                $app->replace("\${api.return.loginstatus}", $this->PhraseHandler->get('login_success'));
-                $app->relocate("/",2);
-                $app->display();
-                $UserModule = new UserModule();
-                $UserModule->login("1","1");
+                $app = new Login();
+                break;
+            case ('register'):
+                $app = new Register();
                 break;
             default:
                 die("找不到目标的Api~");
