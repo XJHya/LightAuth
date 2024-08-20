@@ -6,6 +6,10 @@
         width: 90% !important;
     }
 }
+.statusIcon{
+    margin-bottom: 10px;
+    width: 100px;
+}
 .loginbox{
     width: 360px;
     margin-left: 0;
