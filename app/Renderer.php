@@ -125,7 +125,7 @@ class Renderer {
                         $module = $matches[1];
                         if($module == 'captcha'){
                             if($this->config['captcha']==false)return "";
-                            $html = '<div class="captchaBox"><input class="input" placeholder="'.$this->phrases['InputCaptcha'].'"><img src="/api/captcha/"></div>';
+                            $html = '<div class="captchaBox"><input class="input" name="captcha" placeholder="'.$this->phrases['InputCaptcha'].'"><img src="/api/captcha/"></div>';
                             return $html;
                         }
                         return "模块 -> ".$module." 不存在";
