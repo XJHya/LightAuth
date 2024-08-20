@@ -14,7 +14,7 @@ class Captcha {
         $code = "";
         $fontSize = 8;
         $charCount = 4;
-        
+
         for ($i = 0; $i < $charCount; $i++) {
             $fontColor = imagecolorallocate($image, rand(0, 120), rand(0, 120), rand(0, 120));
             $char = $data[rand(0, strlen($data) - 1)];
@@ -23,8 +23,11 @@ class Captcha {
             $y = rand(5, 10);
             imagestring($image, $fontSize, $x, $y, $char, $fontColor);
         }
-        
-        $_SESSION['code'] = $code;
+
+        $_SESSION['captcha_code'] = $code;
+        $_SESSION['captcha_ip'] = $_SERVER['REMOTE_ADDR'];
+        $_SESSION['captcha_device'] = $this->getDeviceInfo();
+
         $pointCount = 200;
         for ($i = 0; $i < $pointCount; $i++) {
             $pointColor = imagecolorallocate($image, rand(100, 220), rand(100, 220), rand(100, 220));
@@ -39,6 +42,27 @@ class Captcha {
         header('Content-type: image/png');
         imagepng($image);
         imagedestroy($image);
+    }
+
+    public function VerifyCaptcha($captcha_code) {
+        session_start();
+        $storedCode = $_SESSION['captcha_code'] ?? '';
+        $storedIp = $_SESSION['captcha_ip'] ?? '';
+        $storedDevice = $_SESSION['captcha_device'] ?? '';
+
+        if ($storedIp !== $_SERVER['REMOTE_ADDR'] || $storedDevice !== $this->getDeviceInfo()) {
+            // 删除验证成功的信息
+            unset($_SESSION['captcha_code']);
+            unset($_SESSION['captcha_ip']);
+            unset($_SESSION['captcha_device']);
+            return false;
+        }
+
+        return $captcha_code === $storedCode;
+    }
+
+    private function getDeviceInfo() {
+        return $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
     }
 }
 ?>
